@@ -7,6 +7,9 @@ body {
   color: #1a1a1a;
   line-height: 1.6;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* Navigation */
 nav {
@@ -83,9 +86,9 @@ h2 {
 }
 
 .about-text p {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .resume-wrapper {
