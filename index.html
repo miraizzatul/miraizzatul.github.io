@@ -3,207 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mira Izzatul | Game Programmer</title>
-  
-  <!-- Google Fonts -->
+  <title>Mira Izzatul – Game Programmer Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome for Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  
-  <style>
-    :root {
-      --primary: #00ffff;
-      --bg: #121212;
-      --section-bg: #1e1e1e;
-      --text: #eaeaea;
-      --text-muted: #aaa;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    header {
-      padding: 2rem 1rem;
-      text-align: center;
-      background: #1a1a1a;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.8rem;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-    }
-
-    nav {
-      background: #1a1a1a;
-      text-align: center;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    section {
-      background: var(--section-bg);
-      padding: 2rem 1rem;
-      max-width: 900px;
-      margin: 2rem auto;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.03);
-    }
-
-    h2 {
-      color: var(--primary);
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.3rem;
-      margin-bottom: 1rem;
-    }
-
-    .skills ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .skills li {
-      flex: 1 1 45%;
-      background: #2a2a2a;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-    }
-
-    .project {
-      margin-bottom: 2rem;
-      background: #2a2a2a;
-      padding: 1.2rem;
-      border-radius: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .project:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-    }
-
-    .project h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-    }
-
-    .links a {
-      margin-right: 1rem;
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .links a:hover {
-      text-decoration: underline;
-    }
-
-    .github a, .contact a {
-      color: var(--primary);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://github.com/miramuzafar" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
 
   <header>
     <h1>Mira Izzatul</h1>
-    <p>Game Programmer | Unreal Engine | C++, Blueprints, UI, Gameplay</p>
+    <p>Game Programmer | Unreal Engine | Gameplay • UI</p>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
   <section id="about">
-    <h2>About Me</h2>
-    <p>
-      Hi, I'm a game programmer with a professional background in Unreal Engine development. I focus on creating engaging, polished player experiences through solid gameplay systems, smooth multiplayer functionality, and intuitive UI.<br><br>
-      I enjoy bringing ideas to life—whether it’s building a custom combat system, syncing gameplay across the network, or designing clean, responsive interfaces. I work comfortably with both C++ and Blueprints, and love collaborating with designers and artists to turn concepts into fun, playable features.<br><br>
-      I take pride in writing clean, reliable code and solving technical problems that make games more stable, immersive, and fun.
-    </p>
+    <h2>About</h2>
+    <div class="about-container">
+      <img src="profile.jpg" alt="Mira Izzatul" class="profile-photo">
+      <div>
+        <p><strong>Hi, I'm Mira!</strong> I'm a game programmer specializing in Unreal Engine (C++ & Blueprints).</p>
+        <p>I focus on creating engaging, polished player experiences through solid gameplay systems, smooth multiplayer functionality, and intuitive UI.<br><br>
+      I enjoy bringing ideas to life, whether it’s building a custom combat system, syncing gameplay across the network, or designing clean, responsive interfaces. I work comfortably with both C++ and Blueprints, and love collaborating with designers and artists to turn concepts into fun, playable features.<br><br>
+      I take pride in writing clean, reliable code and solving technical problems that make games more stable, immersive, and fun.</p>
+      </div>
+    </div>
   </section>
 
-  <section class="skills" id="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li>Unreal Engine (Blueprint, C++)</li>
-      <li>Visual Studio</li>
-      <li>Gameplay Programming</li>
-      <li>UI Programming</li>
-      <li>Perforce</li>
-      <li>Git & GitHub</li>
-    </ul>
-  </section>
-
-  <section class="projects" id="projects">
+  <section id="projects">
     <h2>Projects</h2>
-
     <div class="project">
       <h3>Abiotic Factor</h3>
-      <p><strong>Engine:</strong> UE5, Visual Studio, C++ | <strong>Role:</strong> Gameplay Programmer</p>
-      <p>Worked on gameplay mechanics and core systems for a sci-fi co-op survival experience. Collaborated on syncing multiplayer features and creating modular gameplay code.</p>
-      <div class="links">
-        <a href="https://github.com/miramuzafar" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="#" target="_blank"><i class="fas fa-play-circle"></i> Play Demo</a>
-      </div>
+      <p><strong>Engine:</strong> UE5 | <strong>Role:</strong> Gameplay Programmer</p>
+      <p>Multiplayer sci‑fi survival. Focused on gameplay systems and UI implementation.</p>
+      <a href="https://github.com/miramuzafar/abiotic-factor" target="_blank">GitHub →</a>
+      <a href="#" target="_blank">Play Demo →</a>
     </div>
-
     <div class="project">
-      <h3>ToGather: Island</h3>
-      <p><strong>Engine:</strong> UE4, Visual Studio, C++ | <strong>Role:</strong> Game Programmer</p>
-      <p>Built custom AI Behavior Tree Tasks and a modular projectile system. Added PC mouse input, drag-and-drop UI, and expanded the save/load system for player progression.</p>
-      <div class="links">
-        <a href="https://github.com/miramuzafar" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="#" target="_blank"><i class="fas fa-video"></i> Gameplay Video</a>
-      </div>
+      <h3>ToGather:Island</h3>
+      <p><strong>Engine:</strong> UE4 | <strong>Role:</strong> Game Programmer</p>
+      <p>Modular projectiles, AI behavior trees, drag‑and‑drop UI, save/load systems.</p>
+      <a href="https://github.com/miramuzafar/togather-island" target="_blank">GitHub →</a>
+      <a href="#" target="_blank">Gameplay Video →</a>
     </div>
   </section>
 
-  <section class="github">
-    <h2>GitHub</h2>
-    <p>See all my work on GitHub: <a href="https://github.com/miramuzafar" target="_blank">github.com/miramuzafar</a></p>
-  </section>
-
-  <section class="contact" id="contact">
+  <section id="contact">
     <h2>Contact</h2>
     <p>Email: <a href="mailto:nurizzatulamiramuzafar@gmail.com">nurizzatulamiramuzafar@gmail.com</a></p>
     <p>LinkedIn: <a href="https://linkedin.com/in/mira-izzatul" target="_blank">linkedin.com/in/mira-izzatul</a></p>
@@ -212,6 +62,5 @@
   <footer>
     &copy; 2025 Mira Izzatul. All rights reserved.
   </footer>
-
 </body>
 </html>
