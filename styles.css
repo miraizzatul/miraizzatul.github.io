@@ -125,6 +125,26 @@ h2 {
   text-decoration: underline;
 }
 
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.contact-icons .icon {
+  width: 28px;
+  height: 28px;
+  fill: #333;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.contact-icons .icon:hover {
+  opacity: 1;
+  fill: #0077b6;
+}
+
 /* Footer */
 footer {
   text-align: center;
