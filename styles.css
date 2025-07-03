@@ -61,41 +61,35 @@ h2 {
 }
 
 /* About */
-.about-flex {
+.about-container {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
   flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
 }
-
 .profile-photo {
-  width: 160px;
-  height: 160px;
-  border-radius: 12px;
-  object-fit: cover;
-  flex-shrink: 0;
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
-.about-text {
-  flex: 1;
-  min-width: 250px;
-}
-
+/* Resume */
 .resume-link {
-  text-align: center;
-  margin-top: 1.5rem;
-}
-
-.resume-link a {
-  text-decoration: none;
+  font-size: 1rem;
   font-weight: 500;
+  text-decoration: none;
   color: #333;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.resume-link a:hover {
-  border-color: #333;
+.resume-link:hover {
+  color: #000;
+  border-color: #000;
 }
 
 .resume-link .icon {
