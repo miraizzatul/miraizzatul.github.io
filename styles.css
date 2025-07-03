@@ -134,11 +134,20 @@ h2 {
 }
 
 /* Projects */
+@media (max-width: 768px) {
+  .projects-grid {
+    flex-direction: column;
+  }
+
+  .project {
+    flex: 1 1 100%;
+  }
+}
 .project {
 	flex: 1 1 45%;
   margin-bottom: 2rem;
 }
-.projects-grid {
+.project-grid {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
