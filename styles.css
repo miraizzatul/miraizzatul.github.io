@@ -1,15 +1,15 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #0f0f0f;
-  color: #f0f0f0;
+  background: #ffffff;
+  color: #222222;
   line-height: 1.6;
 }
 
 header {
   padding: 2rem;
   text-align: center;
-  background: #1a1a1a;
+  background: #f1f1f1; /* instead of dark gray */
 }
 
 header h1 {
@@ -26,11 +26,14 @@ section {
   padding: 2rem 1rem;
   max-width: 900px;
   margin: auto;
+  background: #f9f9f9; /* light background for content blocks */
+  border: 1px solid #e0e0e0; /* subtle section edges */
+  border-radius: 12px;
 }
 
 h2 {
-  color: #00ffff;
-  border-bottom: 1px solid #333;
+  color: #2b6cb0; /* soft blue */
+  border-bottom: 1px solid #ddd; /* lighter line */
   padding-bottom: 0.3rem;
 }
 
@@ -58,7 +61,7 @@ h2 {
 
 .links a {
   margin-right: 1rem;
-  color: #00ffff;
+  color: #2b6cb0;
   text-decoration: none;
 }
 
