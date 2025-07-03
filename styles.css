@@ -73,11 +73,17 @@ h2 {
 }
 
 .profile-photo {
-  width: 180px;
+  width: 260px; /* Increased from 180px */
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-photo {
+    width: 180px;
+  }
 }
 
 .about-text {
@@ -172,7 +178,7 @@ h2 {
 }
 /* Mobile: stack vertically */
 @media (max-width: 768px) {
-  .projects-grid {
+  .project-grid {
     flex-direction: column;
   }
 
