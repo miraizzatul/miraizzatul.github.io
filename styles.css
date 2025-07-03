@@ -117,10 +117,6 @@ h2 {
 }
 
 /* Contact */
-#contact a {
-  color: #0077b6;
-  text-decoration: none;
-}
 #contact a:hover {
   text-decoration: underline;
 }
