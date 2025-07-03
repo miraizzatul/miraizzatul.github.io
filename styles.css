@@ -135,7 +135,7 @@ h2 {
 
 /* Projects */
 @media (max-width: 768px) {
-  .projects-grid {
+  .project-grid {
     flex-direction: column;
   }
 
