@@ -172,7 +172,7 @@ h2 {
   width: 100%;
   max-width: 600px;
   max-height: 512px;
-  height: auto;
+  object-fit: cover; /* Crops to fit the container */
   margin: 1rem 0;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
