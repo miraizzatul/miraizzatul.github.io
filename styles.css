@@ -86,7 +86,7 @@ h2 {
   text-align: left; /* Forces left alignment of text */
 }
 
-.about-text p, .project p {
+.about-text p{
   margin-bottom: 1.2rem;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -152,6 +152,9 @@ h2 {
   max-width: calc(50% - 1rem);
   box-sizing: border-box;
 }
+.project p {
+	font-size: 0.95rem;
+}
 .project-grid {
   display: flex;
   gap: 2rem;
@@ -185,7 +188,6 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 /* Mobile: stack vertically */
 @media (max-width: 768px) {
