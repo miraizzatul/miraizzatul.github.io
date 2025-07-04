@@ -84,7 +84,6 @@ h2 {
   flex: 1;
   min-width: 0;
   text-align: left; /* Forces left alignment of text */
-  max-width: 768px;
 }
 
 .about-text p {
