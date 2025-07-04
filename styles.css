@@ -33,7 +33,7 @@ nav {
   font-weight: 500;
 }
 .nav-links a:hover {
-  color: #10b981;
+  color: #6366f1;
 }
 
 /* Header */
@@ -134,8 +134,8 @@ h2 {
 }
 
 .resume-link:hover {
-  color: #10b981;
-  border-color: #10b981;
+  color: #6366f1;
+  border-color: #6366f1;
 }
 
 @media (max-width: 768px) {
@@ -236,7 +236,7 @@ h2 {
 }
 
 .contact-icons a:hover {
-  color: #10b981;
+  color: #6366f1;
 }
 
 /* Footer */
