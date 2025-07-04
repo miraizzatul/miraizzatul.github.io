@@ -72,6 +72,10 @@ h2 {
   flex-wrap: nowrap;
 }
 
+.about-container p:last-of-type {
+  text-align: left;
+}
+
 .profile-photo {
   width: 260px; /* Increased from 180px */
   height: auto;
@@ -128,10 +132,6 @@ h2 {
 .resume-link:hover {
   color: #10b981;
   border-color: #10b981;
-}
-
-.about-container p:last-of-type {
-  text-align: center;
 }
 
 @media (max-width: 768px) {
