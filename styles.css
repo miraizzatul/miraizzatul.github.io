@@ -93,8 +93,8 @@ h2 {
 
 .about-text p {
   margin-bottom: 0.8rem;
-  font-size: 1.05rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.6;
 }
 
 .resume-wrapper {
@@ -171,6 +171,7 @@ h2 {
 .project-image {
   width: 100%;
   max-width: 600px;
+  max-height: 512px;
   height: auto;
   margin: 1rem 0;
   border-radius: 8px;
