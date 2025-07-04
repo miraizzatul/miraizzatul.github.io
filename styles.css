@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #ffffff;
   color: #1a1a1a;
   line-height: 1.6;
@@ -33,7 +33,7 @@ nav {
   font-weight: 500;
 }
 .nav-links a:hover {
-  color: #0077b6;
+  color: #10b981;
 }
 
 /* Header */
@@ -68,7 +68,7 @@ h2 {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
 }
 
@@ -80,31 +80,32 @@ h2 {
   flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
-  .profile-photo {
-    width: 180px;
-  }
-  .about-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .about-text {
-    text-align: left; /* Optional: revert to left-aligned text if preferred */
-  }
-}
-
 .about-text {
   flex: 1;
   min-width: 0;
-  max-width: 700px;
+  text-align: left; /* Forces left alignment of text */
+  max-width: 768px;
 }
 
 .about-text p {
   margin-bottom: 1.2rem;
   font-size: 0.95rem;
   line-height: 1.6;
-  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    align-items: flex-start; /* Keep content left-aligned on mobile */
+  }
+
+  .about-text {
+    text-align: left; /* Ensure left alignment even on mobile */
+  }
+
+  .profile-photo {
+    width: 180px;
+  }
 }
 
 .resume-wrapper {
@@ -125,7 +126,7 @@ h2 {
 }
 
 .resume-link:hover {
-  color: #000;
+  color: #10b981;
   border-color: #000;
 }
 
@@ -228,7 +229,7 @@ h2 {
 }
 
 .contact-icons a:hover {
-  color: #0077b6;
+  color: #10b981;
 }
 
 /* Footer */
