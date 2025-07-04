@@ -154,6 +154,8 @@ h2 {
 }
 .project p {
 	font-size: 0.95rem;
+	line-height: 1.6;
+	margin: 0.5rem 0;
 }
 .project-grid {
   display: flex;
