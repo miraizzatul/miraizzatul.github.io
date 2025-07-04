@@ -72,10 +72,6 @@ h2 {
   flex-wrap: nowrap;
 }
 
-.about-container p:last-of-type {
-  text-align: left;
-}
-
 .profile-photo {
   width: 260px; /* Increased from 180px */
   height: auto;
@@ -172,7 +168,7 @@ h2 {
   margin-right: 1rem;
   margin-top: 0.5rem;
   color: #0077b6;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   text-decoration: none;
 }
 .project a:hover {
@@ -183,8 +179,7 @@ h2 {
   max-width: 600px;
   height: 300px;               /* Force consistent height */
   overflow: hidden;            /* Crop overflow */
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /*border-radius: 8px;*/
 }
 .project-image {
   width: 100%;
