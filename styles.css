@@ -156,13 +156,6 @@ h2 {
 }
 
 /* Projects */
-.article-link {
-  text-align: center;
-  font-weight: 500;
-  font-size: 1rem;
-  text-decoration: underline;
-  color: #333;
-}
 .project {
 	flex: 1 1 calc(50% - 1rem);
   max-width: calc(50% - 1rem);
@@ -194,6 +187,21 @@ h2 {
 }
 .project a:hover {
   text-decoration: underline;
+}
+.article-link {
+  text-align: center;
+}
+.article-link a {
+  display: inline-block;
+  color: #333;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-style: italic;
+}
+.article-link a:hover {
+  text-decoration: underline;
+  color: #6366f1;
+  border-color: #6366f1;
 }
 .project-image-wrapper {
   width: 100%;
