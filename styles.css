@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui;
   background-color: #ffffff;
   color: #1a1a1a;
   line-height: 1.6;
@@ -44,10 +44,11 @@ header {
 header h1 {
   font-size: 2.5rem;
   margin-bottom: 0.3rem;
+  color:#333
 }
 header p {
   font-size: 1.2rem;
-  color: #666;
+  color:#777
 }
 
 /* Sections */
@@ -61,6 +62,12 @@ h2 {
   margin-bottom: 1.5rem;
   border-bottom: 2px solid #eee;
   padding-bottom: 0.3rem;
+  color:#333
+}
+h2 date {
+  color:#333;
+  font-size:.95rem;
+  margin-bottom:25px;
 }
 
 /* About */
@@ -92,6 +99,7 @@ h2 {
   flex: 1;
   min-width: 0;
   text-align: left; /* Forces left alignment of text */
+  color:#333
 }
 
 .about-text p{
@@ -99,6 +107,7 @@ h2 {
   font-size: 0.9rem;
   line-height: 1.6;
   text-align: left;
+  color:#333
 }
 
 @media (max-width: 768px) {
@@ -165,6 +174,7 @@ h2 {
 	font-size: 0.9rem;
 	line-height: 1.6;
 	margin: 0.5rem 0;
+	color:#333;
 }
 .project-grid {
   display: flex;
@@ -174,8 +184,10 @@ h2 {
   margin-top: 1rem;
 }
 .project h3 {
-  margin-bottom: 0.5rem;
-  color: #222;
+  color: #333;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
 }
 .project a {
   display: inline-block;
@@ -209,11 +221,60 @@ h2 {
   max-width: 600px;
   max-height: 300px;
   overflow: hidden;
+  margin:auto;
 }
 .project-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.article-title	{
+  color:#333;
+  font-size:1.8rem;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+.article-date	{
+  color:#333;
+  font-size:.75rem;
+  margin-bottom:30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.4rem;
+}
+.article-content {
+	margin-left: 200px;
+	margin-right: 200px;
+	text-align: justify;
+}
+.article-content p{
+	font-size:1rem;
+	color:#333;
+}
+.article-content a{
+	font-size:1.1rem;
+	font-weight:bold;
+	color:#333;
+}
+.article-image {
+	width: 65%;
+  height: auto;
+}
+.article-video {
+	text-align: center;
+	color: #333;
+	font-size: 0.9rem;
+	font-style: italic;
+}
+.article-linknormal{
+	display: inline-block;
+	font-size:0.95rem;
+	text-decoration:underline;
+	color: #6366f1;
+	border-color: #6366f1;
+	font-weight: normal;
+}
+.article-italic{
+	font-style:italic;
 }
 /* Mobile: stack vertically */
 @media (max-width: 768px) {

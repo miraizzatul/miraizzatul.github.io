@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mira Izzatul – Game Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    ul {
+	  font-size: 0.95rem;
+    }
+	</style>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#projects">PORTFOLIO</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+      <li><a href="MiraIzzatul_Resume.pdf" class="resume-link" target="_blank">RESUME</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>MIRA IZZATUL - GAME DEVELOPER</h1>
+  </header>
+  
+  <section id="projects">
+	<div class="container">
+		<article>
+		<header>
+			<div class= "article-title"> Dota 2 Creep Aggro System Breakdown </div>
+			<div class="article-date">
+                14/7/2025
+				<p></p>
+            </div>
+				<img src="Images/aggro.png" class="article-image">
+				<div class="article-link">	
+					<a href="https://youtu.be/X_vf2-7eU0A?t=118" target="_blank" rel="noopener noreferrer">
+						Source: Lane Tips and Tricks: Defensive Aggro
+					</a>
+				</div>
+					<div class="article-content">
+						<br>
+						<p>Creep aggro is a targeting override system that temporarily modifies a lane creep’s default target selection behavior when specific player-triggered conditions are met. The purpose of creep aggro is to enable the player to manipulate lane equilibrium, pulling enemy creeps closer to friendly towers for safety and easier last hitting. It does not replace baseline creep logic, it interrupts and redirects it. This seemingly simple rule has significant implications for lane control, harassment, and skill expression.
+						</p>
+						<p>It is a beneficial laning mechanic for these specific reasons:
+						</p>
+						<ol>
+							<strong><li>Depths to player skill:</li></strong>
+							Knowing how to manipulate the 500 unit acquisition range, 3 second cooldown, and 2.3 second chase duration is vital. Mastering this mechanic is a foundational skill that distinguishes experienced players from beginners, allowing for better trading, more efficient farming, and less pressure from the enemy in lane.
+							<p></p>
+							<strong><li>Keeps early game engaging:</li></strong>
+							Without aggro, laning would often devolve into passive last hitting and stat check trading. Instead, creep aggro ensures constant interaction, mechanical expression and decision making every few seconds.
+							<p></p>
+							<strong><li>It rewards player intention, not just stats:</li></strong>
+							In many games, minions just auto attack whatever is closest. In Dota 2, players can manually manipulate creeps by issuing the attack on the enemy hero. This can help reset or alter the lane equilibrium and secure last hits and denies even in a badly matched-up lane, thus providing a more sustainable laning phase to the player.
+						</ol>
+						<br>
+						<br>
+						<a>Default Targeting State</a>
+						<br>
+						<p>Lane creeps automatically acquire the nearest valid enemy within their acquisition range when idle. Once a target is selected, they continue attacking it until the target becomes invalid. Creeps do not immediately switch targets when attacked; they exhibit target persistence as long as their current target remains valid and within range.
+						</p>
+						<p>Creep aggro modifies this default targeting behavior under specific conditions.
+						</p>
+						<br>
+						<br>
+						<a>Triggering Creep Aggro</a>
+						<br>
+						<br>
+					</div>
+					<video id="fast-gif" autoplay loop muted playsinline width="770">
+						<source src="Videos/aggrovid.mp4" type="video/mp4" class="article-video">
+					</video>
+					<div class="article-video">	
+						<figcaption>Radiant Sniper and Dire Pugna both successfully execute creep aggro in the mid lane</figcaption>
+					</div>
+					<br>
+					<div class="article-content">
+						Creep aggro is a targeting override system that causes lane creeps to switch focus when specific conditions are met.
+					</div>
+					<a href="Images/AggroSystem.png" data-lightbox="gallery">
+						<img src="Images/AggroSystem.png" class="article-image">
+					</a>
+					<div class="article-video">	
+						<figcaption>Creep Aggro Universal Mechanics Description Framework</figcaption>
+					</div>
+					<br>
+					<div class="article-content">
+					<p>
+						<ul>
+							<li>A hero issues an attack command on an enemy hero, illusion, clone, or Lone Druid’s 
+							<a href="https://liquipedia.net/dota2/Spirit_Bear" target="_blank" rel="noopener noreferrer" class="article-linknormal">
+								<div class="article-linknormal">
+									Spirit Bear
+								</div>
+							</a>
+							 anywhere on the map as long as they are visible to the issuer.
+							</li>
+							<p></p>
+							<li>The command is issued within the aggro radius of 500 (acquisition range) of enemy lane creeps.
+							</li>
+							<p></p>
+							<li>The creep is not within its 3 second internal aggro cooldown.
+							</li>
+							<p></p>
+							<li>The attack type issued by the hero is an attack command, not an auto-attack (auto-attack chooses the target on its own).
+							</li>
+						</ul>
+						<p>A hero doesn’t have to actually launch an attack, they just need to issue a command to trigger the aggro on enemy creeps. This makes the system respond to player intent, not combat outcome.
+						</p>
+						<p>
+							<div class="article-italic">
+								<strong>Important note:</strong>
+							</div>
+							Creeps stay aggroed for up to 2.3 seconds, during which they will chase the hero no matter what. After this duration, the creeps return to their default behavior.
+						</p>
+						<br>
+						<br>
+						<a>Evolution of the System</a>
+						<br>
+						<p>Creep aggro likely started as a simple punishment mechanic in RTS/MOBA systems (such as Warcraft III), where attacking would draw nearby unit aggression.
+						</p>
+						<p>In Dota 2, it has evolved into something much more deliberate. Because the system is predictable and input-driven, players can actively control it to manipulate waves and positioning. What was once a reactive rule has effectively become a tool for skill expression.
+						</p>
+						<br>
+						<br>
+						<a>Exploitability as Design Intent</a>
+						<br>
+						<p>Creep aggro in Dota 2 is intentionally deterministic and manipulable because it responds to player input rather than damage, and because its duration and cooldown are fixed, players can deliberately trigger and control it.
+						</p>
+						<p>This controlled exploitability enables:</p>
+						<ul>
+							<li>Wave repositioning</li>
+							<li>Lane freezing</li>
+							<li>Ranged creep protection</li>
+							<li>Harassment optimization</li>
+							<li>Positional bluffing.</li>
+						</ul>
+						<p>Aggro is not a punishment mechanic, it’s a skill expression tool. The system is symmetrical, rule-consistent, and cooldown-limited, preventing abuse while preserving depth.
+						</p>
+						<p>In this way, creep aggro transforms basic creep behaviour into a mastery-driven competitive layer.
+						</p>
+						<br>
+						<br>
+						<a>Mastery Curve</a>
+						<br>
+						<p>Creep aggro operates across three levels of player understanding:
+						</p>
+						<br>
+					</p>
+	</div>
+  </section>
+
+  <section id="contact">
+  <div class="contact-icons">
+    <!-- Email -->
+    <a href="mailto:nurizzatulamiramuzafar@gmail.com" title="Email">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2 4h20v16H2z" fill="none"/>
+        <path d="M22 4H2v16h20V4zm-2 2v.511l-8 5.333-8-5.333V6h16zm0 12H4V8.489l8 5.333 8-5.333V18z"/>
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://linkedin.com/in/mira-izzatul" target="_blank" title="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4zM7.5 8h3.8v2.2h.1c.5-.9 1.7-2.2 3.6-2.2 3.9 0 4.6 2.5 4.6 5.8V24h-4v-7.5c0-1.8-.1-4.1-2.5-4.1s-2.9 1.9-2.9 3.9V24h-4V8z"/>
+      </svg>
+    </a>
+
+    <!-- GitHub -->
+    <a href="https://github.com/miraizzatul" target="_blank" title="GitHub">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 
+        3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 
+        0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61 
+        -.546-1.387-1.333-1.757-1.333-1.757-1.09-.744.084-.729.084-.729 
+        1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.304 3.495.997 
+        .108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.334-5.467-5.93 
+        0-1.31.47-2.38 1.236-3.22-.135-.303-.54-1.523.105-3.176 
+        0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.405c1.02.005 2.045.138 3 .405 
+        2.28-1.552 3.285-1.23 3.285-1.23 .645 1.653.24 2.873.12 3.176 
+        .765.84 1.23 1.91 1.23 3.22 0 4.61-2.807 5.625-5.48 5.92 
+        .42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 
+        0 .315.21.694.825.576C20.565 22.092 24 17.592 24 12.297 
+        c0-6.627-5.373-12-12-12"/>
+      </svg>
+    </a>
+  </div>
+</section> 
+
+  <footer>
+    &copy; 2025 Mira Izzatul.
+  </footer>
+</body>
+</html>
 
