@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mira Izzatul – Game Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    ul {
+	  font-size: 0.95rem;
+    }
+	</style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="prism.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html#about">ABOUT</a></li>
+      <li><a href="index.html#projects">PORTFOLIO</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+      <li><a href="MiraIzzatul_Resume.pdf" class="resume-link" target="_blank">RESUME</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>MIRA IZZATUL - GAME DEVELOPER</h1>
+  </header>
+  
+  <section id="projects">
+	<div class="container">
+		<article>
+		<header>
+			<div class= "article-title"> Building a Scalable Fire Spreading Simulation in Unreal Engine 5 </div>
+			<div class="article-date">
+                17/7/2025
+				<p></p>
+            </div>
+				<a href="Images/fire-spreading-sim.png" data-lightbox="gallery">
+					<img src="Images/fire-spreading-sim.png" class="article-imagecontainer">
+				</a>
+					<div class="article-content">
+						<br>
+						<div class="article-link">	
+							<a href="https://github.com/miraizzatul/Fire_Spreading_Simulation" target="_blank" rel="noopener noreferrer">
+								Download Project Files Here
+							</a>
+						</div>
+						<br>
+						<p>Fire propagation is a common feature in games, but simulating it across thousands of objects quickly becomes a performance challenge. This project explores the design and implementation of a real-time fire spreading simulation in Unreal Engine 5, with an emphasis on scalability, performance, and interactive visualization rather than scientific wildfire modelling.
+						</p>
+						<p>To keep the focus on the simulation itself, vegetation is represented using simple cube instances instead of detailed trees or foliage. Primitive geometry removes rendering complexity from the experiment, allowing performance observations to primarily reflect the fire spreading system rather than expensive visual assets.
+						</p>
+						<p>Throughout this article, I'll explain the reasoning behind the major design decisions that shaped the system.</p>
+						<br>
+						<br>
+						<a>Choosing the Right Representation</a>
+						<br>
+						<p>The first challenge was deciding how cube should be represented.
+						</p>
+						<p>A straightforward implementation would spawn every cube object as an individual Actor.
+						</p>
+						<br>
+						<a href="Images/actorchart.png" data-lightbox="gallery">
+							<img src="Images/actorchart.png" class="article-imagecontainer">
+						</a>
+						<br>
+						<p>This design is simple and flexible, but it becomes expensive as the number of objects grows.</p>
+						<p>Thousands of Actors meant:</p>
+						<ul>
+							<li>Thousands of UObject allocations</li>
+							<li>Thousands of transforms</li>
+							<li>Thousands of collision components</li>
+							<li>Thousands of objects managed by Unreal's Actor system</li>
+						</ul>
+						<p>Most of these objects weren't actually doing anything most of the time. That made me question whether Actors were the right representation.</p>
+						<br>
+						<br>
+						<a>Switching to Hierarchical Instanced Static Meshes</a>
+						<br>
+						<p>Instead of treating every cube as an Actor, I changed the design so that only one Actor existed.</p>
+						<a href="Images/actorchart.png" data-lightbox="gallery">
+							<img src="Images/actorchart.png" class="article-imagecontainer">
+						</a>
+						<br>
+						<p>Because every cube shares the same mesh and material, HISM allows Unreal Engine to batch render efficiently while significantly reducing draw calls and memory usage. Using HISM provides several advantages:&nbsp;</p>
+						<ul>
+							<li>Lower memory overhead</li>
+							<li>Reduced draw calls</li>
+							<li>Hierarchical culling</li>
+							<li>Excellent scalability for thousands of instances</li>
+						</ul>
+						<p>However, this decision also introduces an important limitation. Unlike Actors, HISM instances cannot independently own Components, execute gameplay logic, or Tick. This means the fire simulation itself cannot live inside each cube instance.&nbsp;</p>
+						<p>So I had to build that system myself.</p>
+						<br>
+						<br>
+						<a>Separating Rendering from Gameplay</a>
+						<br>
+						<p>Once I moved to HISM, I needed somewhere to store the simulation data. That's where <code>FFireInstanceData</code> came from.</p>
+						<p>Rather than attaching behaviour to every cube, I kept all of the fire information inside a lightweight struct.</p>
+						<pre><code class="language-cpp">
+USTRUCT(BlueprintType)
+struct FFireInstanceData
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	AActorSpawner* Spawner = nullptr;
+
+	UPROPERTY()
+	EFireState FireState = EFireState::Fresh;
+
+	UPROPERTY()
+	float ElapsedTime = 0.f;
+
+	// World time when this instance was last updated
+	UPROPERTY()
+	float LastUpdateTime = 0.f;
+
+	UPROPERTY()
+	int32 InstanceIndex = -1;
+
+	// Cached world location (update if the instance moves)
+	UPROPERTY()
+	FVector CachedLocation = FVector::ZeroVector;
+
+	void StartBurn(float CurrentTime)
+	{
+		FireState = EFireState::Burning;
+		ElapsedTime = 0.f;
+		LastUpdateTime = CurrentTime;
+	}
+};
+</code></pre>
+						<br>
+						<p>Separating gameplay logic from rendering keeps the rendering pipeline lightweight while allowing thousands of cube objects to participate in the simulation. 
+						</p>
+						<br>
+						<br>
+						<a>Procedural Scene Generation</a>
+						<br>
+						<p>Rather than hard-coding cube locations, I generate a grid of candidate positions across the simulation area. Each grid point receives a small random offset to break up the uniform pattern, producing a more natural-looking distribution while still maintaining a minimum spacing between instances.
+						</p>
+						<a href="Images/actorchart.png" data-lightbox="gallery">
+							<img src="Images/actorchart.png" class="article-imagecontainer">
+						</a>
+						<br>
+<pre><code class="language-cpp">
+for (float X = MinX; X &lt;= MaxX; X += step)
+{
+    for (float Y = MinY; Y &lt;= MaxY; Y += step)
+    {
+        FCandidate C;
+
+        float RandomOffsetX = FMath::FRandRange(-maxScatter, maxScatter);
+        float RandomOffsetY = FMath::FRandRange(-maxScatter, maxScatter);
+
+        C.Pos = FVector( X + RandomOffsetX, Y + RandomOffsetY, 0.f );
+
+        C.MinX = MinX;
+        C.MaxX = MaxX;
+        C.MinY = MinY;
+        C.MaxY = MaxY;
+
+        CandidatePositions.Add(C);
+    }
+}
+</code></pre>
+						<p>The code snippet works in three stages:</p>
+						<ol>
+							<li>Generate a regular grid using a configurable spacing variable named <code>step</code> so vegetation is distributed evenly across the landscape.</li>
+							<li>Apply a random offset <code>FRandRange</code> to each grid point to avoid an artificial, perfectly aligned appearance.</li>
+							<li>Store each location as a candidate, which will later be projected onto the landscape and randomly selected during spawning.</li>
+						</ol>
+						<p>This approach gives me a predictable upper bound on the number of possible spawn locations while still producing a different layout each time the scene is generated.
+						</p>
+						<br>
+						<br>
+						<a>Spatial Hash Grid</a>
+						<br>
+						<p>While designing the fire spreading simulation, I knew that a simple neighbour search wouldn't scale well as the number of cubes increased. To avoid that bottleneck, I decided to implement a spatial hash grid. Each cube is assigned into a grid cell according to its world position once its generated, allowing the simulation to search only nearby cubes when spreading fire.
+						</p>
+						<pre><code class="language-cpp">
+void AFireManager::InsertInstanceIntoGrid(int32 FireArrayIndex)
+{
+	if (!fireInstances.IsValidIndex(FireArrayIndex)) return;
+
+	const FVector& Pos = fireInstances[FireArrayIndex].CachedLocation;
+	int32 CX = 0, CY = 0;
+	GetCellCoords(Pos, CX, CY);
+	int64 Key = ComputeCellKey(CX, CY);
+
+	TArray&lt;int32&gt;& Bucket = SpatialHashGrid.FindOrAdd(Key);
+	Bucket.AddUnique(FireArrayIndex);
+}
+</code></pre>						
+						<br>
+						<br>
+						<br>
+						<a>Wind-Driven Fire Spread</a>
+						<br>
+						<p>I didn't want fire to spread equally in every direction because that's not how real fires behave. Instead, I wanted the wind to influence where the fire was more likely to spread, while still allowing it to occasionally spread sideways or even slightly against the wind.
+						</p>
+						<pre><code class="language-cpp">
+// Direction from source to target
+const FVector ToTarget = (TargetLoc - SourceLoc).GetSafeNormal();
+
+// Wind influence (dot product)
+const float WindDot = FVector::DotProduct(ToTarget, WindNorm);
+
+// Minimum spread factor ensures fire can always spread a bit (e.g., 10%)
+const float MinFactor = 0.1f;
+
+// Apply wind influence, scaled and clamped between MinFactor and 1 + windStrength
+const float WindFactor = FMath::Clamp(1.0f + WindDot * windSpeed, MinFactor, 1.0f + windSpeed);
+
+// Final chance
+float FinalChance = spreadChance * WindFactor;
+</code></pre>
+						<p>The dot product tells me whether the target object is positioned with or against the wind. If it is downwind, the ignition probability increases. If it is upwind, the probability decreases but never reaches zero because of the minimum spread factor. This creates a spread pattern that feels much more natural instead of expanding as a perfect circle.
+						</p>
+						<br>
+						<br>
+						<a>Fire State Lifecycle</a>
+						<br>
+						<p>When a cube is ignited, I first check whether it is already burning or has completely burnt out. This prevents the same cube from being ignited multiple times. Once the cube starts burning, its state is updated and the burn progress is reset to 0%. I also update the HISM custom data so the material can immediately display the visual transition from a fresh cube to a burning one.
+						</p>
+						<pre><code class="language-cpp">
+void AFireManager::IgniteInstance(FFireInstanceData& Instance)
+{
+	// Already bruning or done
+	if (Instance.FireState == EFireState::Burning || Instance.FireState == EFireState::Burnt) return;
+
+	// Start burning using current world time
+	Instance.StartBurn(GetWorld()->GetTimeSeconds());
+
+	if (Instance.Spawner && Instance.Spawner->HISM)
+	{
+		Instance.Spawner->HISM->SetCustomDataValue(Instance.InstanceIndex, 0, 1.f); // e.g., 1 = burning
+		Instance.Spawner->HISM->SetCustomDataValue(Instance.InstanceIndex, 1, 0.f); // Reset burn progress
+	}
+}
+</code></pre>
+						<br>
+						<p>As the burn timer progresses, each cube gradually approaches 100% burn progress. Once that point is reached, its state changes to <code>Burnt</code>, meaning it can no longer ignite neighbouring cubes. The custom data is updated one final time so the material reflects the burnt appearance, ensuring the simulation state and visual representation always remain synchronized.
+						</p>
+						<pre><code class="language-cpp">
+// When burn finished
+if (Progress >= 1.f)
+{
+    Instance.FireState = EFireState::Burnt;
+
+    if (Instance.Spawner && Instance.Spawner->HISM)
+    {
+        Instance.Spawner->HISM->SetCustomDataValue(Instance.InstanceIndex, 0, 2.f, true);
+        Instance.Spawner->HISM->SetCustomDataValue(Instance.InstanceIndex, 1, 1.f, true);
+    }
+}
+</code></pre>
+						<br>
+						<video id="fast-gif" autoplay loop muted playsinline width="800">
+							<source src="Videos/fire spreading demo.mp4" type="video/mp4" class="article-video">
+						</video>
+						<br>
+						<br>
+						<br>
+						<a>Avoiding Tick</a>
+						<br>
+						<p>One decision I made early on was to avoid using Tick() since the simulation doesn't need to update 60 times every second. Instead, I used timers.
+						</p>
+						<pre><code class="language-cpp">
+// Spread timer
+if (!GetWorld()->GetTimerManager().IsTimerActive(spreadTimerHandle))
+{
+	GetWorld()->GetTimerManager().SetTimer(spreadTimerHandle, this, &AFireManager::TrySpread, 0.5f, true);
+}
+
+// Burn update timer (every 0.1s)
+if (!GetWorld()->GetTimerManager().IsTimerActive(burnUpdateTimerHandle))
+{
+	GetWorld()->GetTimerManager().SetTimer(burnUpdateTimerHandle, this, &AFireManager::UpdateBurnProgress, 0.1f, true);
+}
+</code></pre>
+						<p>The simulation still looks smooth, but the CPU isn't wasting time checking thousands of cubes every frame.
+						</p>
+						<br>
+						<br>
+						<a>Limiting the World</a>
+						<br>
+						<p>Originally I experimented with spawning cubes across large landscape. It looked nice, but it didn't really improve the simulation because most of the cubes were simply too far away to matter.
+						</p>
+						<p>Eventually I decided to reduce the landscape area to 100×100 metres so that I can immediately see meaningful fire behaviour instead of staring at huge empty areas.
+						</p>
+						<p>Also I could pack cubes much more densely while keeping the simulation manageable for now.
+						</p>
+						<br>
+						<br>
+						<a>Interactive Controls</a>
+						<br>
+						<p>The simulation exposes several parameters through a <strong>UserWidget</strong>.
+						</p>
+						<ul>
+							<li>Wind Speed</li>
+							<li>Wind Direction</li>
+							<li>Spread Chance</li>
+							<li>Spread Radius</li>
+							<li>Burn Time</li>
+							<li>Pause/Resume button</li>
+							<li>As well as button to generate new HISM instances</li>
+						</ul>
+						<a href="Images/user widget.png" data-lightbox="gallery">
+							<img src="Images/user widget.png" class="article-imagecontainer">
+						</a>
+						<p>Changes are applied immediately without rebuilding the simulation.
+						</p>
+						<br>
+						<br>
+						<a>Profiling and Optimisation</a>
+						<br>
+						<p>Once everything was working, I increased the cube count from 100 to 1000 cubes. Everything still felt fine.</p>
+						<p>Then I tried spawning 5000 cubes. The simulation itself ran smoothly, but everytime <code>AActorSpawner::GenerateScene()</code> was running, Unreal froze for about two seconds before anything appeared.
+						At first I assumed the renderer was struggling. It wasn't. The delay happened before the cubes were even visible.</p>
+						<video id="fast-gif" autoplay loop muted playsinline width="800">
+							<source src="Videos/delay issue.mp4" type="video/mp4" class="article-video">
+						</video>
+						<br>
+						<br>
+						<p>To understand what was causing the freeze, I profiled the <code>GenerateScene()</code> using Unreal Insights. A single call to the function took <strong>2 seconds</strong> to complete, which explained the noticeable freeze every time I generated a new scene with 5000 cubes.
+						</p>
+						<a href="Images/generate scene bug.png" data-lightbox="gallery">
+							<img src="Images/generate scene bug.png" class="article-imagecontainer">
+						</a>
+						<br>
+						<p>As shown below, nearly the entire execution time was spent inside <code>HISM->AddInstance()</code>, which internally creates the physics bodies, registers collision geometry, and updates the hierarchical instance tree for every cube added.
+						</p>
+						<a href="Images/calle.png" data-lightbox="gallery">
+							<img src="Images/calle.png" class="article-imagecontainer">
+						</a>
+						<br>
+						<pre><code class="language-cpp">
+while (PlacedCount &lt; AttemptTarget && CandidatePositions.Num() &gt; 0)
+{	
+	....
+	
+    int32 Index = HISM->AddInstance(InstanceTransform);
+
+    if (fireManager)
+    fireManager->RegisterFireComponent(Index, this);
+
+    PlacedCount++;
+}
+</code></pre>
+						<br>
+						<p>Looking at the profiler and the code, I realised I was asking Unreal to do the same expensive work 5000 times. Instead of adding each cube one by one, I collected all of their transforms first and submitted them in a single <code>AddInstances()</code> call. It was a surprisingly small change, but it removed a huge amount of unnecessary overhead.
+						<pre><code class="language-cpp">
+while (PlacedCount &lt; AttemptTarget && CandidatePositions.Num() &gt; 0)
+{	
+	....
+	
+    Transforms.Add(FTransform(InstanceRotation, FinalPos, ObjScale));
+
+    //int32 Index = HISM->AddInstance(InstanceTransform);
+    PlacedCount++;
+}
+
+Index = HISM->GetInstanceCount();
+HISM->AddInstances(Transforms, false, true, false);
+
+for (int32 i = 0; i &lt; Transforms.Num(); i++)
+{
+    fireManager->RegisterFireComponent(Index + i, this);
+}
+</code></pre>
+						<br>
+						<p>After batching the instance creation, the same function completed in approximately 50ms. Most of the expensive overhead disappeared, leaving only the engine's internal work of registering the instances with Chaos Physics.
+						</p>
+						<a href="Images/generate scene after after after.png" data-lightbox="gallery">
+							<img src="Images/generate scene after after after.png" class="article-imagecontainer">
+						</a>
+						<br>
+						<p>The profiler showed a significant improvement, but the change was even more obvious during testing. What had previously caused a noticeable pause now generated the entire scene almost instantly.
+						</p>
+						<video id="fast-gif" autoplay loop muted playsinline width="800">
+							<source src="Videos/after fixed vid.mp4" type="video/mp4" class="article-video">
+						</video>
+						<br>
+						<br>
+						<a>Conclusion</a>
+						<br>
+						<p>I hope this breakdown is useful to anyone building large-scale gameplay systems in Unreal Engine. While none of the techniques I used are particularly groundbreaking, understanding when to use HISM, spatial hashing, and Unreal Insights made a significant difference. Sometimes, good performance simply comes from understanding how the engine works and avoiding work it doesn't need to do.
+						</p>
+						<br>
+						<div class="article-link">	
+							<a href="https://github.com/miraizzatul/Fire_Spreading_Simulation" target="_blank" rel="noopener noreferrer">
+								Download Project Files Here
+							</a>
+						</div>
+					</div>
+  </section>
+
+  <section id="contact">
+  <div class="contact-icons">
+    <!-- Email -->
+    <a href="mailto:nurizzatulamiramuzafar@gmail.com" title="Email">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2 4h20v16H2z" fill="none"/>
+        <path d="M22 4H2v16h20V4zm-2 2v.511l-8 5.333-8-5.333V6h16zm0 12H4V8.489l8 5.333 8-5.333V18z"/>
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://linkedin.com/in/mira-izzatul" target="_blank" title="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4zM7.5 8h3.8v2.2h.1c.5-.9 1.7-2.2 3.6-2.2 3.9 0 4.6 2.5 4.6 5.8V24h-4v-7.5c0-1.8-.1-4.1-2.5-4.1s-2.9 1.9-2.9 3.9V24h-4V8z"/>
+      </svg>
+    </a>
+
+    <!-- GitHub -->
+    <a href="https://github.com/miraizzatul" target="_blank" title="GitHub">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 
+        3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 
+        0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61 
+        -.546-1.387-1.333-1.757-1.333-1.757-1.09-.744.084-.729.084-.729 
+        1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.304 3.495.997 
+        .108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.334-5.467-5.93 
+        0-1.31.47-2.38 1.236-3.22-.135-.303-.54-1.523.105-3.176 
+        0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.405c1.02.005 2.045.138 3 .405 
+        2.28-1.552 3.285-1.23 3.285-1.23 .645 1.653.24 2.873.12 3.176 
+        .765.84 1.23 1.91 1.23 3.22 0 4.61-2.807 5.625-5.48 5.92 
+        .42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 
+        0 .315.21.694.825.576C20.565 22.092 24 17.592 24 12.297 
+        c0-6.627-5.373-12-12-12"/>
+      </svg>
+    </a>
+  </div>
+</section> 
+
+  <footer>
+    &copy; 2025 Mira Izzatul.
+  </footer>
+	<script src="prism.js"></script>
+	<script src="prism-copy-to-clipboard.min.js"></script>
+</body>
+</html>
+

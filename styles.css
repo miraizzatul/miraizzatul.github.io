@@ -11,6 +11,10 @@ html {
   scroll-behavior: smooth;
 }
 
+table {
+    margin: 20px auto;
+}
+
 /* Navigation */
 nav {
   background-color: #f9f9f9;
@@ -68,6 +72,20 @@ h2 date {
   color:#333;
   font-size:.95rem;
   margin-bottom:25px;
+}
+pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 5px;
+    border-radius: 4px;
+    overflow-x: auto;
+    line-height: 0.5;
+}
+
+code {
+    white-space: pre;
+	font-family: Consolas, "Courier New", monospace;
+	color: #6366f1;
 }
 
 /* About */
@@ -242,9 +260,9 @@ h2 date {
   padding-bottom: 0.4rem;
 }
 .article-content {
-	margin-left: 200px;
-	margin-right: 200px;
-	text-align: justify;
+	max-width: 800px;
+    margin: 0 auto;
+    text-align: justify;
 }
 .article-content p{
 	font-size:1rem;
@@ -255,11 +273,21 @@ h2 date {
 	font-weight:bold;
 	color:#333;
 }
-.article-image {
-	width: 65%;
-  height: auto;
+.article-imagecontainer {
+	max-width: 800px;
+    margin: 0 auto;
+	height: auto;
+	display: block;
+}
+.article-imagecontainer img {
+	/*width: 100%;
+	height: 100%;*/
+	object-fit: contain; /* Shows whole image, no cropping */
 }
 .article-video {
+    margin: 0 auto;
+	height: auto;
+	display: block;
 	text-align: center;
 	color: #333;
 	font-size: 0.9rem;
@@ -276,6 +304,7 @@ h2 date {
 .article-italic{
 	font-style:italic;
 }
+
 /* Mobile: stack vertically */
 @media (max-width: 768px) {
   .project-grid {
