@@ -80,8 +80,8 @@
 						<a>Switching to Hierarchical Instanced Static Meshes</a>
 						<br>
 						<p>Instead of treating every cube as an Actor, I changed the design so that only one Actor existed.</p>
-						<a href="Images/actorchart.png" data-lightbox="gallery">
-							<img src="Images/actorchart.png" class="article-imagecontainer">
+						<a href="Images/hism.png" data-lightbox="gallery">
+							<img src="Images/hism.png" class="article-imagecontainer">
 						</a>
 						<br>
 						<p>Because every cube shares the same mesh and material, HISM allows Unreal Engine to batch render efficiently while significantly reducing draw calls and memory usage. Using HISM provides several advantages:&nbsp;</p>
@@ -140,11 +140,16 @@ struct FFireInstanceData
 						<br>
 						<a>Procedural Scene Generation</a>
 						<br>
+						<a href="Images/procedural scene gen.png" data-lightbox="gallery">
+							<img src="Images/procedural scene gen.png" class="article-imagecontainer">
+						</a>
+						<div class="article-video">	
+							<figcaption>Cube HISM Procedural Generation Description Framework</figcaption>
+						</div>
+						<br>
 						<p>Rather than hard-coding cube locations, I generate a grid of candidate positions across the simulation area. Each grid point receives a small random offset to break up the uniform pattern, producing a more natural-looking distribution while still maintaining a minimum spacing between instances.
 						</p>
-						<a href="Images/actorchart.png" data-lightbox="gallery">
-							<img src="Images/actorchart.png" class="article-imagecontainer">
-						</a>
+						<img src="Images/landscape.png" class="article-imagecontainer">
 						<br>
 <pre><code class="language-cpp">
 for (float X = MinX; X &lt;= MaxX; X += step)
