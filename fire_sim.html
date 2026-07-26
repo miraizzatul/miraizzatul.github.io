@@ -272,7 +272,7 @@ if (Progress >= 1.f)
 						<br>
 						<a>Avoiding Tick</a>
 						<br>
-						<p>One decision I made early on was to avoid using Tick() since the simulation doesn't need to update 60 times every second. Instead, I used timers.
+						<p>One design decision I made early on was to avoid using Tick(), since the simulation doesn't need to update every frame. Instead, I used timers, which provide better control over the update cycle and make it easy to pause and resume the simulation when needed.
 						</p>
 						<pre><code class="language-cpp">
 // Spread timer
