@@ -333,8 +333,8 @@ if (!GetWorld()->GetTimerManager().IsTimerActive(burnUpdateTimerHandle))
 						<br>
 						<p>To understand what was causing the freeze, I profiled the <code>GenerateScene()</code> using Unreal Insights. A single call to the function took <strong>2 seconds</strong> to complete, which explained the noticeable freeze every time I generated a new scene with 5000 cubes.
 						</p>
-						<a href="Images/generatescenebug.png" data-lightbox="gallery">
-							<img src="Images/generatescenebug.png" class="article-imagecontainer">
+						<a href="Images/generatescenebug.PNG" data-lightbox="gallery">
+							<img src="Images/generatescenebug.PNG" class="article-imagecontainer">
 						</a>
 						<br>
 						<p>As shown below, nearly the entire execution time was spent inside <code>HISM->AddInstance()</code>, which internally creates the physics bodies, registers collision geometry, and updates the hierarchical instance tree for every cube added.
