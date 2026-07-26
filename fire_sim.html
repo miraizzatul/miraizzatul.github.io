@@ -265,7 +265,7 @@ if (Progress >= 1.f)
 </code></pre>
 						<br>
 						<video id="fast-gif" autoplay loop muted playsinline width="800">
-							<source src="Videos/fire spreading demo.mp4" type="video/mp4" class="article-video">
+							<source src="videos/fire spreading demo.mp4" type="video/mp4" class="article-video">
 						</video>
 						<br>
 						<br>
@@ -327,7 +327,7 @@ if (!GetWorld()->GetTimerManager().IsTimerActive(burnUpdateTimerHandle))
 						<p>Then I tried spawning 5000 cubes. The simulation itself ran smoothly, but everytime <code>AActorSpawner::GenerateScene()</code> was running, Unreal froze for about two seconds before anything appeared.
 						At first I assumed the renderer was struggling. It wasn't. The delay happened before the cubes were even visible.</p>
 						<video id="fast-gif" autoplay loop muted playsinline width="800">
-							<source src="Videos/delay issue.mp4" type="video/mp4" class="article-video">
+							<source src="videos/delay issue.mp4" type="video/mp4" class="article-video">
 						</video>
 						<br>
 						<br>
@@ -387,7 +387,7 @@ for (int32 i = 0; i &lt; Transforms.Num(); i++)
 						<p>The profiler showed a significant improvement, but the change was even more obvious during testing. What had previously caused a noticeable pause now generated the entire scene almost instantly.
 						</p>
 						<video id="fast-gif" autoplay loop muted playsinline width="800">
-							<source src="Videos/after fixed vid.mp4" type="video/mp4" class="article-video">
+							<source src="videos/after fixed vid.mp4" type="video/mp4" class="article-video">
 						</video>
 						<br>
 						<br>
