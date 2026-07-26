@@ -339,8 +339,8 @@ if (!GetWorld()->GetTimerManager().IsTimerActive(burnUpdateTimerHandle))
 						<br>
 						<p>As shown below, nearly the entire execution time was spent inside <code>HISM->AddInstance()</code>, which internally creates the physics bodies, registers collision geometry, and updates the hierarchical instance tree for every cube added.
 						</p>
-						<a href="Images/calle.png" data-lightbox="gallery">
-							<img src="Images/calle.png" class="article-imagecontainer">
+						<a href="Images/calle.PNG" data-lightbox="gallery">
+							<img src="Images/calle.PNG" class="article-imagecontainer">
 						</a>
 						<br>
 						<pre><code class="language-cpp">
@@ -380,8 +380,8 @@ for (int32 i = 0; i &lt; Transforms.Num(); i++)
 						<br>
 						<p>After batching the instance creation, the same function completed in approximately 50ms. Most of the expensive overhead disappeared, leaving only the engine's internal work of registering the instances with Chaos Physics.
 						</p>
-						<a href="Images/gen-after.png" data-lightbox="gallery">
-							<img src="Images/gen-after.png" class="article-imagecontainer">
+						<a href="Images/gen-after.PNG" data-lightbox="gallery">
+							<img src="Images/gen-after.PNG" class="article-imagecontainer">
 						</a>
 						<br>
 						<p>The profiler showed a significant improvement, but the change was even more obvious during testing. What had previously caused a noticeable pause now generated the entire scene almost instantly.
